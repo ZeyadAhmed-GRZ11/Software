@@ -1,1 +1,5 @@
-"watch": "nodemon --ext *" //to play npm run watch//
+"watch": "nodemon --ext *" //to play npm run watch to display auto refresh for changes// 
+
+// app.get('/user/search.html', (req, res) => {
+//   res.render("user/edit")
+// })
