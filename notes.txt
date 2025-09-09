@@ -1,0 +1,1 @@
+"watch": "nodemon --ext *" //to play npm run watch//
