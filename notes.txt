@@ -1,5 +1,35 @@
-"watch": "nodemon --ext *" //to play npm run watch to display auto refresh for changes// 
+
+"watch": "nodemon --ext *" //to play cmd(npm run watch) to display auto refresh for changes// 
+
 
 // app.get('/user/search.html', (req, res) => {
 //   res.render("user/edit")
 // })
+
+
+app.use(express.urlencoded({ extended: true })); -> خلّي Express يقرأ بيانات النموذج (form) ويحولها إلى كائن داخل req.body، حتى لو كانت البيانات متداخلة.
+
+
+*Data base*
+const mongoose = require('mongoose'); //to use mongoose
+const Schema = mongoose.Schema; // to define the schema
+ 
+// define the Schema (the structure of the article)
+const articleSchema = new Schema({
+  username: String
+}); // define the structure of the document (the article) to be saved in the collection 
+
+const Mydata = mongoose.model("Mydata", articleSchema); // create the model (the collection) to be used
+
+module.exports = Mydata; // export the model to be used in other files
+**
+
+
+ejs tags -> <%= %> not <% %>
+
+<% if (typeof successMessage !== 'undefined' && successMessage) { %>
+  <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+    <%= successMessage %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% } %> // this for alert message above table
