@@ -1,0 +1,26 @@
+
+// models/schema.js
+const mongoose = require('mongoose');
+const customerSchema = new mongoose.Schema({
+  firstName: String,
+  lastName: String,
+  // ...other fields...
+  isDeleted: { type: Boolean, default: false }
+});
+module.exports = mongoose.model('Customer', customerSchema);
+
+// app.js
+app.post('/user/delete/:id', async (req, res) => {
+  try {
+    await Customer.findByIdAndUpdate(req.params.id, { isDeleted: true });
+    res.redirect('/');
+  } catch (err) {
+    res.status(500).send("Error deleting user");
+  }
+});
+
+//app.js
+app.get('/', async (req, res) => {
+  const customerData = await Customer.find({ isDeleted: false });
+  res.render("index",{ customerData, currentPage: 'index', successMessage: 'Data submitted successfully!', pageTitle: 'Home Page', moment: moment }) 
+});

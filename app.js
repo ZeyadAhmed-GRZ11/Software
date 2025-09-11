@@ -30,17 +30,22 @@ app.get('/', async (req, res) => {
   res.render("index",{ customerData, currentPage: 'index', successMessage: 'Data submitted successfully!', pageTitle: 'Home Page' , moment: moment }) 
 })
 
-
 app.get('/user/add.html', (req, res) => {
   const successMessage = req.query.success === '1' ? 'Data submitted successfully!' : '';
   res.render("user/add", { currentPage: 'add', successMessage });
 });
 
-app.get('/user/edit.html', (req, res) => {
-  res.render("user/edit")
-})
+app.get('/edit/:id', async (req, res) => {
+  try {
+    const user = await Customer.findById(req.params.id);
+    res.render("user/edit", { user, currentPage: 'edit', pageTitle: 'Edit Page', successMessage2: "Data updated successfully!" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("User not found");
+  }
+});
 
-app.get('/user/:id', async (req, res) => {
+app.get('/view/:id', async (req, res) => {
   try {
     const user = await Customer.findById(req.params.id); // fetch user by ID
     res.render("user/view", { user, currentPage: 'view', pageTitle: 'View Page', moment: moment }); // render view with user data
@@ -52,7 +57,6 @@ app.get('/user/:id', async (req, res) => {
 
 
 // POST Requests
-
 app.post('/user/add.html', async (req, res) => {
   try {
     const customer = new Customer(req.body);
@@ -69,6 +73,15 @@ app.post('/user/delete/:id', async (req, res) => {
     res.redirect('/');
   } catch (err) {
     res.status(500).send("Error deleting user");
+  }
+});
+
+app.post('/edit/:id', async(req, res)=>{
+  try {
+    await Customer.findByIdAndUpdate(req.params.id, req.body, { new: true });
+     res.redirect('/');
+  }catch(err){
+    console.log(err, "Error updating user");
   }
 });
 

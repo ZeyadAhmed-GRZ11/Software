@@ -31,6 +31,8 @@
 
       <section class="w-100">
         <%- include('./components/navbar.ejs')%>
+       
+        
 
         <table
           style="width: 99%"
@@ -62,7 +64,7 @@
                   data-bs-title="View details"
                   data-bs-placement="top"
                   class="btn btn-primary btn-sm"
-                  href="/user/<%= customer._id %>"
+                  href="./view/<%= customer._id %>"
                   ><i class="bi bi-eye"></i
                 ></a>
                 <a
@@ -70,7 +72,7 @@
                   data-bs-title="Edit user"
                   data-bs-placement="top"
                   class="btn btn-primary btn-sm"
-                  href="/user/edit/<%= customer._id %>"
+                  href="./edit/<%= customer._id %>"
                 >
                   <i class="bi bi-pencil"></i>
                 </a>
@@ -80,7 +82,7 @@
                   style="display: inline"
                 >
                   <button type="submit" class="btn btn-danger btn-sm">
-                    <i class="bi bi-trash"></i> Delete
+                    <i class="bi bi-trash"></i>
                   </button>
                 </form>
               </td>

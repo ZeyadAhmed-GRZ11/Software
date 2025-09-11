@@ -6,7 +6,7 @@
       rel="stylesheet"
       href="../bootstrap-icons-1.10.5/font/bootstrap-icons.min.css"
     />
-    <link rel="shortcut icon" href="../img/ali.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../img/ali.png" type="image/x-icon" />
 
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -16,7 +16,7 @@
       content="Mark Otto, Jacob Thornton, and Bootstrap contributors"
     />
     <meta name="generator" content="Hugo 0.112.5" />
-    <title>Edit page</title>
+    <title><%= pageTitle %></title>
 
     <link href="../css/bootstrap.min.css" rel="stylesheet" />
     <link href="../css/dark&light.css" rel="stylesheet" />
@@ -25,65 +25,75 @@
     <link rel="stylesheet" href="../css/myStyle.css" />
   </head>
   <body>
-   
-     <%- include('../components/dark-light.ejs') %>
+    <%- include('../components/dark-light.ejs') %>
 
     <main class="d-flex flex-nowrap">
-    
-       <%- include('../components/sidebar.ejs',{currentPage:"edit"}) %>
+      <%- include('../components/sidebar.ejs',{currentPage:"edit"}) %>
 
       <section class="w-100">
-
         <%- include('../components/navbar.ejs')%>
 
-
-        <nav class="px-2 mt-4 d-flex flex-wrap justify-content-between" aria-label="breadcrumb">
+        <nav
+          class="px-2 mt-4 d-flex flex-wrap justify-content-between"
+          aria-label="breadcrumb"
+        >
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Ali Hassan</li>
+            <li class="breadcrumb-item active" aria-current="page">
+              <%= user.firstName %> <%= user.lastName %>
+            </li>
           </ol>
 
-
-          <p class="me-md-5"> <span class="fw-medium fs-6">Id :</span> 6487021520bcf1af6319484c</p>
+          <p class="me-md-5">
+            <span class="fw-medium fs-6">Id :</span> <%= user.id  %>
+          </p>
         </nav>
 
-        
-        <form class="mx-0 row gx-3 gy-4 mt-2">
+      <form action="/edit/<%= user._id %>" method="POST">
           <div class="col-md-6">
             <label for="inputfirstName4" class="form-label">First Name:</label>
             <input
-              placeholder="Ali..."
+              name="firstName"
+              placeholder="first name"
               type="text"
               class="form-control"
               id="inputfirstName4"
+              value="<%= user.firstName %>"
             />
           </div>
           <div class="col-md-6">
+            
             <label for="inputlastName4" class="form-label">Last Name:</label>
             <input
-              placeholder="Hassan..."
+              name="lastName"
+              placeholder="last name"
               type="text"
               class="form-control"
               id="inputlastName4"
+              value="<%= user.lastName %>"
             />
           </div>
 
           <div class="col-md-6">
             <label for="inputemail4" class="form-label">Email:</label>
             <input
-              placeholder="ali@gmail.com"
+              name="email"
+              placeholder="Email@"
               type="email"
               class="form-control"
               id="inputemail4"
+              value="<%= user.email %>"
             />
           </div>
           <div class="col-md-6">
-            <label for="inputtele4" class="form-label">Telephone:</label>
+            <label for="inputtele4" class="form-label">Phone Number:</label>
             <input
-              placeholder="011987899"
-              type="number"
+              name="phoneNumber"
+              placeholder="phone number"
+              type="text"
               class="form-control"
               id="inputtele4"
+               value="<%= user.phoneNumber %>"
             />
           </div>
 
@@ -91,10 +101,12 @@
             <div class="col-md-6">
               <label for="inputage4" class="form-label">Age:</label>
               <input
-                placeholder="Your Age: ..."
+                name="age"
+                placeholder="Age:"
                 type="number"
                 class="form-control"
                 id="inputage4"
+                 value="<%= user.age %>"
               />
             </div>
           </div>
@@ -102,9 +114,8 @@
           <div>
             <div class="col-md-6">
               <label for="inputCountry" class="form-label">Country:</label>
-              <select id="inputCountry" class="form-select">
+              <select name="country" id="inputCountry" class="form-select">
                 <option selected hidden disabled>Choose here ...</option>
-
                 <option>Morocco</option>
                 <option>Egypt</option>
               </select>
@@ -114,7 +125,7 @@
           <div>
             <div class="col-md-6">
               <label for="inputGender" class="form-label">Gender:</label>
-              <select id="inputGender" class="form-select">
+              <select name="gender" id="inputGender" class="form-select">
                 <option selected hidden disabled>Choose here ...</option>
                 <option>Male</option>
                 <option>Female</option>
@@ -123,17 +134,7 @@
           </div>
 
           <div class="col-12">
-            <button type="submit" class="btn btn-primary">
-              Update changes
-            </button>
-            <button
-              data-bs-toggle="modal"
-              data-bs-target="#exampleModal"
-              type="button"
-              class="btn btn-danger"
-            >
-              Delete Customer
-            </button>
+            <button type="submit" class="btn btn-primary">Submit</button>
           </div>
         </form>
       </section>
@@ -159,7 +160,9 @@
                 aria-label="Close"
               ></button>
             </div>
-            <div class="modal-body">Are you sure you want to continue delete the customer?</div>
+            <div class="modal-body">
+              Are you sure you want to continue delete the customer?
+            </div>
             <div class="modal-footer">
               <button
                 type="button"
@@ -168,9 +171,7 @@
               >
                 Close
               </button>
-              <button type="button" class="btn btn-danger">
-                Delete
-              </button>
+              <button type="button" class="btn btn-danger">Delete</button>
             </div>
           </div>
         </div>
