@@ -9,7 +9,7 @@ const customerSchema = new Schema({
   age: Number,
   country: String,
   gender: String,
-});
+}, { timestamps: true });
 
 const customer = mongoose.model("customer", customerSchema); 
 

@@ -6,6 +6,7 @@ app.use(express.urlencoded({ extended: true }));
 const Customer = require('./models/customerSchema');   //importing schema
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
+var moment = require('moment'); // require
 
 //Auto refresh
 const path = require("path");
@@ -26,7 +27,7 @@ liveReloadServer.server.once("connection", () => {
 // GET Requests
 app.get('/', async (req, res) => {
   const customerData = await Customer.find();
-  res.render("index",{ customerData, currentPage: 'index', successMessage: 'Data submitted successfully!', pageTitle: 'Home Page' }) 
+  res.render("index",{ customerData, currentPage: 'index', successMessage: 'Data submitted successfully!', pageTitle: 'Home Page' , moment: moment }) 
 })
 
 
@@ -42,7 +43,7 @@ app.get('/user/edit.html', (req, res) => {
 app.get('/user/:id', async (req, res) => {
   try {
     const user = await Customer.findById(req.params.id); // fetch user by ID
-    res.render("user/view", { user, currentPage: 'view', pageTitle: 'View Page' }); // render view with user data
+    res.render("user/view", { user, currentPage: 'view', pageTitle: 'View Page', moment: moment }); // render view with user data
   } catch (err) {
     console.log(err);
     res.status(500).send("User not found");
@@ -59,6 +60,15 @@ app.post('/user/add.html', async (req, res) => {
     res.redirect('/user/add.html?success=1');
   } catch (err) {
     res.redirect('/user/add.html?success=0');
+  }
+});
+
+app.post('/user/delete/:id', async (req, res) => {
+  try {
+    await Customer.findByIdAndDelete(req.params.id);
+    res.redirect('/');
+  } catch (err) {
+    res.status(500).send("Error deleting user");
   }
 });
 

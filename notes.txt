@@ -1,3 +1,7 @@
+object {} -> have two things -> {key : "value"} 
+and obj in array is a element from a lot of elements in array like data base in mongoose 
+
+
 
 "watch": "nodemon --ext *" //to play cmd(npm run watch) to display auto refresh for changes// 
 
@@ -58,3 +62,9 @@ app.post('/user/add.html', (req, res) => {
     console.log(err)
   })
 })
+
+<td><%= customer.updatedAt ? customer.updatedAt.toLocaleDateString() : '' %></td>
+//
+<td><%= moment(customer.updatedAt).fromNow(); %></td>
+//
+<td><%= moment(customer.updatedAt).format("MM Do YY") %></td>

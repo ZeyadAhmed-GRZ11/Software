@@ -88,11 +88,11 @@
             </tr>
             <tr>
               <th scope="row">Created on</th>
-              <td><%= user.createdAt %></td>
+              <td><%= moment(user.createdAt).fromNow(); %></td>
             </tr>
             <tr>
               <th scope="row">Last Update</th>
-              <td><%= user.updatedAt %></td>
+              <td><%= moment(user.updatedAt).fromNow(); %></td>
             </tr>
           </tbody>
         </table>
