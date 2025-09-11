@@ -6,7 +6,7 @@
       rel="stylesheet"
       href="../bootstrap-icons-1.10.5/font/bootstrap-icons.min.css"
     />
-    <link rel="shortcut icon" href="../img/ali.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../img/ali.png" type="image/x-icon" />
 
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -25,25 +25,46 @@
     <link rel="stylesheet" href="../css/myStyle.css" />
   </head>
   <body>
-
-     <%- include('../components/dark-light.ejs') %>
+    
+    <%- include('../components/dark-light.ejs') %>
 
     <main class="d-flex flex-nowrap">
-      
       <%- include('../components/sidebar.ejs',{currentPage : "add"}) %>
 
       <section class="w-100">
+        <%- include('../components/navbar.ejs')%> 
 
-        <%- include('../components/navbar.ejs')%>
-
-        <% if (typeof successMessage !== 'undefined' && successMessage) { %>
-           <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
-           <%= successMessage %>
-           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>
+        <% if (typeof successMessage
+        !== 'undefined' && successMessage) { %>
+        <div
+          id="success-alert"
+          class="alert alert-success alert-dismissible fade show mt-3"
+          role="alert"
+        >
+          <%= successMessage %>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
+        </div>
+        <script>
+          setTimeout(function () {
+            var alert = document.getElementById("success-alert");
+            if (alert) {
+              alert.classList.remove("show");
+              alert.classList.add("hide");
+            }
+          }, 3000); // 3 seconds
+        </script>
         <% } %>
 
-        <form action="/user/add.html" method="post" class="mx-0 row gx-3 gy-4 mt-3">
+        <form
+          action="/user/add.html"
+          method="post"
+          class="mx-0 row gx-3 gy-4 mt-3"
+        >
           <div class="col-md-6">
             <label for="inputfirstName4" class="form-label">First Name:</label>
             <input
@@ -131,6 +152,5 @@
     <script src="../js/bootstrap.bundle.min.js"></script>
     <script src="../js/sidebars.js"></script>
     <script src="../js/main.js"></script>
-
   </body>
 </html>

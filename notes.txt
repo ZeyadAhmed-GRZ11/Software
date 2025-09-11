@@ -33,3 +33,28 @@ ejs tags -> <%= %> not <% %>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
 <% } %> // this for alert message above table
+
+
+// app.get('/user/:id', (req, res) => {
+
+//   Customer.findById(req.params.id)
+//   .then((result) => { 
+//     res.render("user/view", { user, currentPage: 'view' })
+//   }).catch((err) => { 
+//     console.log(err)
+//   })
+
+// })
+
+
+app.post('/user/add.html', (req, res) => {
+  console.log(req.body) // to see the form data in the console
+  const customer = new Customer(req.body); // create a new customer document from the form data
+  customer.save() // save the document to the database
+  .then(( ) => {
+    res.redirect('/user/add.html')
+  }) 
+  .catch((err) => { 
+    console.log(err)
+  })
+})

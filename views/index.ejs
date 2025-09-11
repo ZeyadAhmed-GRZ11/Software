@@ -12,7 +12,7 @@
     <meta name="description" content="" />
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors"/>
     <meta name="generator" content="Hugo 0.112.5" />
-    <title>Home page</title>
+    <title><%= pageTitle %></title>
 
     <link href="./css/bootstrap.min.css" rel="stylesheet" />
     <link href="../css/dark&light.css" rel="stylesheet" />
@@ -32,13 +32,8 @@
     
         <%- include('./components/navbar.ejs')%>
     
-         <% if (typeof successMessage !== 'undefined' && successMessage) { %>
-            <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
-         <%= successMessage %>
-           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-           </div>
-         <% } %>
-         
+        
+
         <table
           style="width: 99%"
           class="text-center mx-auto table mt-5 table-striped table-bordered"
@@ -64,7 +59,7 @@
                    <td><%= customer.age %></td>
                    <td><%= customer.updatedAt ? customer.updatedAt.toLocaleDateString() : '' %></td>
                    <td>
-                     <a data-bs-toggle="tooltip"data-bs-title="View details" data-bs-placement="top" class="btn btn-primary btn-sm" href="/user/view/<%= customer._id %>"><i class="bi bi-eye"></i></a>
+                     <a data-bs-toggle="tooltip"data-bs-title="View details" data-bs-placement="top" class="btn btn-primary btn-sm" href="/user/<%= customer._id %>"><i class="bi bi-eye"></i></a>
                      <a data-bs-toggle="tooltip" data-bs-title="Edit user" data-bs-placement="top" class="btn btn-primary btn-sm" href="/user/edit/<%= customer._id %>">
                         <i class="bi bi-pencil"></i> 
                     </a>
