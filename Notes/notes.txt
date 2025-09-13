@@ -68,3 +68,35 @@ app.post('/user/add.html', (req, res) => {
 <td><%= moment(customer.updatedAt).fromNow(); %></td>
 //
 <td><%= moment(customer.updatedAt).format("MM Do YY") %></td>
+
+// delete
+app.post('/user/delete/:id', async (req, res) => {
+  try {
+    await Customer.findByIdAndDelete(req.params.id);
+    res.redirect('/');
+  } catch (err) {
+    res.status(500).send("Error deleting user");
+  }
+});
+
+action="/user/delete/<%= customer._id %>"
+
+app.get('/edit/:id', async (req, res) => {
+  try {
+    const user = await Customer.findById(req.params.id);
+    res.render("user/edit", {user, currentPage: 'edit', pageTitle: 'Edit Page'});
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("User not found");
+  }
+});
+
+app.get('/view/:id', async (req, res) => {
+  try {
+    const user = await Customer.findById(req.params.id); // fetch user by ID
+    res.render("user/view", { user, currentPage: 'view', pageTitle: 'View Page', moment: moment }); // render view with user data
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("User not found");
+  }
+});

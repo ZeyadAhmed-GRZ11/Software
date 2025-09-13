@@ -7,6 +7,9 @@ const Customer = require('./models/customerSchema');   //importing schema
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
 var moment = require('moment'); // require
+var methodOverride = require('method-override')
+app.use(methodOverride('_method'))
+
 
 //Auto refresh
 const path = require("path");
@@ -27,33 +30,43 @@ liveReloadServer.server.once("connection", () => {
 // GET Requests
 app.get('/', async (req, res) => {
   const customerData = await Customer.find();
-  res.render("index",{ customerData, currentPage: 'index', successMessage: 'Data submitted successfully!', pageTitle: 'Home Page' , moment: moment }) 
-})
+  const updateSuccessMessage = req.query.updateSuccess === '1' ? 'Data updated successfully!' : '';
+  res.render("index", {
+    customerData,
+    currentPage: 'index',
+    pageTitle: 'Home Page',
+    moment: moment,
+    updateSuccessMessage
+  });
+});
 
 app.get('/user/add.html', (req, res) => {
   const successMessage = req.query.success === '1' ? 'Data submitted successfully!' : '';
   res.render("user/add", { currentPage: 'add', successMessage });
 });
 
-app.get('/edit/:id', async (req, res) => {
-  try {
-    const user = await Customer.findById(req.params.id);
-    res.render("user/edit", { user, currentPage: 'edit', pageTitle: 'Edit Page', successMessage2: "Data updated successfully!" });
-  } catch (err) {
-    console.log(err);
-    res.status(500).send("User not found");
-  }
+app.get('/edit/:id', (req, res) => {
+     Customer.findById(req.params.id)
+    .then(user => {
+      res.render("user/edit", { user, currentPage: 'edit', pageTitle: 'Edit Page' });
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).send("User not found");
+    });
 });
 
-app.get('/view/:id', async (req, res) => {
-  try {
-    const user = await Customer.findById(req.params.id); // fetch user by ID
-    res.render("user/view", { user, currentPage: 'view', pageTitle: 'View Page', moment: moment }); // render view with user data
-  } catch (err) {
-    console.log(err);
-    res.status(500).send("User not found");
-  }
+app.get('/view/:id', (req, res) => {
+  Customer.findById(req.params.id)
+    .then(user => {
+      res.render("user/view", { user, currentPage: 'view', pageTitle: 'View Page', moment: moment });
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).send("User not found");
+    });
 });
+
 
 
 // POST Requests
@@ -67,7 +80,18 @@ app.post('/user/add.html', async (req, res) => {
   }
 });
 
-app.post('/user/delete/:id', async (req, res) => {
+app.post('/edit/:id', async (req, res) => {
+  try {
+    await Customer.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    res.redirect('/?updateSuccess=1');
+  } catch (err) {
+    console.log(err, "Error updating user");
+    res.redirect('/?updateSuccess=0');
+  }
+});
+
+// delete request
+app.delete('/edit/:id', async (req, res) => {
   try {
     await Customer.findByIdAndDelete(req.params.id);
     res.redirect('/');
@@ -75,16 +99,6 @@ app.post('/user/delete/:id', async (req, res) => {
     res.status(500).send("Error deleting user");
   }
 });
-
-app.post('/edit/:id', async(req, res)=>{
-  try {
-    await Customer.findByIdAndUpdate(req.params.id, req.body, { new: true });
-     res.redirect('/');
-  }catch(err){
-    console.log(err, "Error updating user");
-  }
-});
-
 
 
 // Database Connection
