@@ -113,10 +113,16 @@
           <div>
             <div class="col-md-6">
               <label for="inputCountry" class="form-label">Country:</label>
-              <select name="country" id="inputCountry" class="form-select">
+              <select
+                required
+                name="country"
+                id="inputCountry"
+                class="form-select"
+              >
                 <option selected hidden disabled>Choose here ...</option>
-                <option>Morocco</option>
-                <option>Egypt</option>
+                <% country_list.forEach(function(country) { %>
+                   <option value="<%= country %>"><%= country %></option>
+                <% }); %>
               </select>
             </div>
           </div>

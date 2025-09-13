@@ -25,16 +25,13 @@
     <link rel="stylesheet" href="../css/myStyle.css" />
   </head>
   <body>
-    
     <%- include('../components/dark-light.ejs') %>
 
     <main class="d-flex flex-nowrap">
       <%- include('../components/sidebar.ejs',{currentPage : "add"}) %>
 
       <section class="w-100">
-        <%- include('../components/navbar.ejs')%> 
-
-        <% if (typeof successMessage
+        <%- include('../components/navbar.ejs')%> <% if (typeof successMessage
         !== 'undefined' && successMessage) { %>
         <div
           id="success-alert"
@@ -129,10 +126,16 @@
           <div>
             <div class="col-md-6">
               <label for="inputCountry" class="form-label">Country:</label>
-              <select required name="country" id="inputCountry" class="form-select">
-                <option selected hidden disabled>Choose here ...</option>
-                <option>Morocco</option>
-                <option>Egypt</option>
+              <select
+                required
+                name="country"
+                id="inputCountry"
+                class="form-select"
+              >
+                <option required selected hidden disabled>Choose here ...</option>
+                <% country_list.forEach(function(country) { %>
+                      <option value="<%= country %>"> <%= country %></option>
+                <% }); %>
               </select>
             </div>
           </div>
@@ -140,7 +143,12 @@
           <div>
             <div class="col-md-6">
               <label for="inputGender" class="form-label">Gender:</label>
-              <select required name="gender" id="inputGender" class="form-select">
+              <select
+                required
+                name="gender"
+                id="inputGender"
+                class="form-select"
+              >
                 <option selected hidden disabled>Choose here ...</option>
                 <option>Male</option>
                 <option>Female</option>
@@ -158,6 +166,5 @@
     <script src="../js/bootstrap.bundle.min.js"></script>
     <script src="../js/sidebars.js"></script>
     <script src="../js/main.js"></script>
-    
   </body>
 </html>
