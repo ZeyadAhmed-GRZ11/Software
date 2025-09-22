@@ -1,0 +1,18 @@
+ Customer.findById(req.params.id) // fetch user by ID // Customer is model name
+
+  const customerData = await Customer.find(); // fetch all users
+
+  const customer = new Customer(req.body); // create a new instance of the model
+
+Customer.findByIdAndUpdate(req.params.id, req.body, { new: true }); // update user by ID
+
+Customer.findByIdAndDelete(req.params.id); // delete user by ID
+
+//
+Customer.find({age : {$lte: 35} })
+$lte // less than or equal
+$gte // grater than or equal
+//
+
+//User.find({ $or: [{fireName: "ali"}, {lastName: "ali"}] })//
+

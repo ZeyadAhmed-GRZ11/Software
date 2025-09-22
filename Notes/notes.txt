@@ -100,3 +100,21 @@ app.get('/view/:id', async (req, res) => {
     res.status(500).send("User not found");
   }
 });
+
+// first version of search engine
+app.post('/search', (req, res) => {
+  console.log("****************************************")
+  const searchText = req.body.searchText.trim()
+  Customer.find({ $or: [ {firstName:searchText}, {lastName:searchText} ] })
+  .then((result) => { 
+     console.log(result)
+     res.render("user/search", {customer , arr: result ,currentPage: 'search', pageTitle: 'Search', moment: moment });
+   }).catch((err) => { 
+     console.log(err)
+  })
+});
+
+//
+$regex: searchText → tells MongoDB to match any field value that contains the searchText pattern.
+$options: "i" → makes it case-insensitive (so "ali" matches "Ali", "ALI", "aLi", etc.).
+//

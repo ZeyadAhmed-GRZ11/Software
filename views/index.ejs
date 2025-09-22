@@ -30,8 +30,9 @@
       <%- include('./components/sidebar.ejs', {currentPage : "index"}) %>
 
       <section class="w-100">
-        <%- include('./components/navbar.ejs')%> <% if (typeof
-        updateSuccessMessage !== 'undefined' && updateSuccessMessage) { %>
+        <%- include('./components/navbar.ejs')%> 
+
+        <% if (typeof updateSuccessMessage !== 'undefined' && updateSuccessMessage) { %>
         <div
           id="success-alert"
           class="alert alert-success alert-dismissible fade show mt-3"
@@ -45,15 +46,17 @@
             aria-label="Close"
           ></button>
         </div>
+        
         <script>
           setTimeout(function () {
             var alert = document.getElementById("success-alert");
             if (alert) {
-              alert.classList.remove("show");
-              alert.classList.add("hide");
+              alert.classList.remove("show"); // Start fade out
+              alert.classList.add("hide"); // Add hide class after fade out
             }
           }, 3000); // 3 seconds
         </script>
+
         <% } %>
 
         <table
