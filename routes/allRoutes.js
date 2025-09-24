@@ -2,21 +2,13 @@ const express = require('express')
 const router = express.Router()
 const Customer = require('../models/customerSchema');   //importing schema
 var moment = require('moment'); // require moment.js for date formatting
-
+const UserController = require('../controllers/UserController');
 
 // GET Requests
-router.get('/', async (req, res) => {
-  const customerData = await Customer.find(); // fetch all users
-  const updateSuccessMessage = req.query.updateSuccess === '1' ? 'Data updated successfully!' : '';
-  res.render("index", {
-    customerData,
-    currentPage: 'index',
-    pageTitle: 'Home Page',
-    moment: moment,
-    updateSuccessMessage
-  });
-});
+// MVC pattern: Controller handles the logic, routes handle the endpoints
+router.get('/', UserController.getAllUsers);
 
+// GET Requests
 router.get('/view/:id', (req, res) => {
   Customer.findById(req.params.id) // fetch user by ID
     .then(user => {
